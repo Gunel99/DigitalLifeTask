@@ -1,0 +1,34 @@
+﻿@model Client
+
+@{ ViewData["Title"] = "Update"; }
+
+<div style="background: #1979a9; padding: 15px; color: #fff;">
+    <h2 class="m-0">Client Update</h2>
+</div>
+
+<form method="post" asp-controller="Client" asp-action="Update" class="m-2">
+    @Html.AntiForgeryToken()
+
+    <div class="text-danger" asp-validation-summary="All"></div>
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label>Client Name:</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Client Surname:</label>
+        <input asp-for="Surname" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-icon-text">
+        <i class="mdi mdi-file-check btn-icon-prepend"></i>
+        Submit
+    </button>
+    <button asp-action="Index" type="submit" class="btn btn-secondary btn-icon-text">
+        <i class="mdi mdi-reload btn-icon-prepend"></i>
+        Cancel
+    </button>
+</form>
+
+

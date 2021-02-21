@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Invoice>
+
+@{ ViewData["Title"] = "List"; }
+
+<div style="background: #1979a9; padding: 15px; color: #fff;">
+    <h2 class="m-0">Invoice List</h2>
+</div>
+
+@if (Model.Count() == 0)
+{
+<p style="text-align: center;
+    font-size: 25px;
+    font-family: auto;
+    margin: 40px 0px;">No Invoices</p> }
+            else
+            {
+                <form method="get" asp-action="List">
+                    <p>
+                        <input style="width: 730px; border: none; padding: 15px; margin-top: 10px;" type="search" name="ProjectSearch" value="@ViewData["GetInvoiceDetails"]" placeholder="Enter Project Name Or Client Name..." />
+                        <input type="submit" value="Search" class="btn btn-primary" />
+                        <a asp-action="List">Get All Invoices</a>
+                    </p>
+                </form>
+
+                @*<form method="post">
+                    <div class="form-group mb-3">
+                        <span> Start Date:</span>
+                        <input type="date" name="startTime" />
+                        <span> End Date:</span>
+                        <input type="date" name="endTime" />
+                        <input type="submit" value="Search" class="btn btn-primary" />
+                    </div>*@
+
+
+    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Invoice Number</th>
+                <th scope="col">Invoice Date</th>
+                <th scope="col">Client</th>
+                <th scope="col">Project Name</th>
+                <th scope="col">Net Amount</th>
+                <th scope="col">Tax Amount</th>
+                <th scope="col">Total Amount</th>
+                <th scope="col">Payment Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @*ViewData["Results"] as IEnumerable<Invoice>*@
+            @foreach (var invoice in Model)
+            {
+<tr>
+    <td>@invoice.InvoiceNumber</td>
+    <td>@invoice.InvoiceDate.ToString("dd MMM yyyy")</td>
+    <td>@invoice.Client.Name @invoice.Client.Surname</td>
+    <td>@invoice.Project.Name</td>
+    <td>@invoice.NetAmount</td>
+    <td>@invoice.TaxAmount</td>
+    <td>@invoice.TotalPrice()</td>
+    <td>
+        @if (!invoice.PaymentStatus)
+        {
+<p>Pending</p> }
+else
+{
+<p>Done</p>}
+    </td>
+
+    <td>
+        <form class="d-flex" asp-route-id="@invoice.Id" asp-action="Delete" method="post">
+            <a class="btn btn-info d-flex justify-content-center" style="width:20px" asp-controller="Invoice" asp-action="Info" asp-route-id="@invoice.Id">
+                <i class="fas fa-info-circle"></i>
+            </a>
+            <button type="submit" class="btn btn-danger d-flex justify-content-center" style="width:20px"><i class="fas fa-trash"></i></button>
+            <a class="btn btn-primary d-flex justify-content-center" style="width:20px" asp-action="Update" asp-route-id="@invoice.Id"><i class="far fa-edit"></i></a>
+        </form>
+    </td>
+</tr>
+}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td style="font-weight:bold; font-size:18px" colspan="4">Total:</td>
+                <td style="font-weight:bold; font-size:18px">@Model.Sum(na => na.NetAmount)</td>
+                <td style="font-weight:bold; font-size:18px">@Model.Sum(ta => ta.TaxAmount)</td>
+                <td style="font-weight:bold; font-size:18px">@Model.Sum(totala => totala.TotalPrice())</td>
+            </tr>
+        </tfoot>
+    </table>
+
+            }
+
+
+

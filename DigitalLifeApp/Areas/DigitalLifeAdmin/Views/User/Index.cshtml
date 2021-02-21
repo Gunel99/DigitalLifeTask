@@ -1,0 +1,49 @@
+﻿@model IEnumerable<AppUser>
+@{ ViewData["Title"] = "Index"; }
+
+
+<div style="background: #1979a9; padding: 15px; color: #fff;">
+    <h2 class="m-0">User List</h2>
+</div>
+
+@if (Model.Count() == 0)
+{
+<p style="text-align: center;
+    font-size: 25px;
+    font-family: auto;
+    margin: 40px 0px;">No Users</p>
+}
+else
+{
+     <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+     <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Surname</th>
+                            <th scope="col">Email</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+                                <td>@user.Name</td>
+                                <td>@user.Surname</td>
+                                <td>@user.Email</td>
+                                <td>
+                                    <form asp-route-id="@user.Id" asp-action="Delete" method="post">
+                                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                        <a class="btn btn-primary" asp-action="Update" asp-route-id="@user.Id"><i class="far fa-edit"></i></a>
+                                    </form>
+                                </td>
+                            </tr>
+                         }
+                    </tbody>
+                </table>
+     <a asp-area="DigitalLifeAdmin" asp-controller="User" asp-action="Create" class="btn btn-primary">
+         <i class="fas fa-plus" style="font-size: 15px; margin-right: 5px;"></i>
+             Create User
+     </a>
+}

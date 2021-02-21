@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Majestic Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/admin/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/admin/vendors/base/vendor.bundle.base.css">
+    <!-- endinject -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="~/admin/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="~/admin/css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="~/admin/images/favicon.png" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <!-- HEADER START -->
+    <header class="main">
+        <div class="contant_header p-2" style="background-color: #1c1e69; color:white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <ul class="register_login d-flex justify-content-end p-0" style=" list-style-type: none;">
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li style="margin-right: 20px;"><a asp-area="DigitalLifeAdmin" asp-controller="Home" asp-action="Index" style="color:white">Admin Page</a></li>
+                                    <li style="margin-right: 20px;"><a style="color:white">@User.Identity.Name</a></li>
+                                    <li style="margin-right: 20px;"><a asp-controller="Account" asp-action="Logout" style="color:white">Logout</a></li>
+                                }
+                                else
+                                {
+                                    <li style="margin-right: 20px;"><a style="color:white">@User.Identity.Name</a></li>
+                                    <li style="margin-right: 20px;"><a asp-controller="Account" asp-action="Logout" style="color:white">Logout</a></li>
+                                }
+                            }
+                            else
+                            {
+                                <li style="margin-right: 20px;"><a asp-controller="Account" asp-action="Register" style="color:white">Sign Up</a></li>
+                                <li style="margin-right: 20px;"><a asp-controller="Account" asp-action="Login" style="color:white">Login</a></li>
+
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HEADER END -->
+
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper p-0">
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Invoice" asp-action="List">
+                            <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+                            <span class="menu-title">Invoice List</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Invoice" asp-action="Create">
+                            <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+                            <span class="menu-title">Invoice Create</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- container-scroller -->
+    @*<div class="container my-3">
+            <div class="row">
+                <div class="col-2">
+                    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                        <ul class="nav d-block">
+                            <li class="nav-item" style="font-size:15px">
+                                <a class="nav-link" asp-controller="Invoice" asp-action="List">
+                                    <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+                                    <span class="menu-title">Invoice List</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" style="font-size:15px">
+                                <a class="nav-link" asp-controller="Invoice" asp-action="Create">
+                                    <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+                                    <span class="menu-title">Invoice Create</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-10">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>*@
+
+
+    <script src="https://kit.fontawesome.com/544d51816e.js" crossorigin="anonymous"></script>
+    <script src="~/admin/vendors/base/vendor.bundle.base.js"></script>
+    <script src="~/admin/vendors/chart.js/Chart.min.js"></script>
+    <script src="~/admin/vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="~/admin/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="~/admin/js/off-canvas.js"></script>
+    <script src="~/admin/js/hoverable-collapse.js"></script>
+    <script src="~/admin/js/template.js"></script>
+    <script src="~/admin/js/dashboard.js"></script>
+    <script src="~/admin/js/data-table.js"></script>
+    <script src="~/admin/js/jquery.dataTables.js"></script>
+    <script src="~/admin/js/dataTables.bootstrap4.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="~/js/main.js"></script>
+</body>
+</html>

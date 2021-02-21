@@ -1,0 +1,52 @@
+﻿@model IEnumerable<IdentityRole>
+@{ 
+    ViewData["Title"] = "Index"; 
+}
+
+<div style="background: #1979a9; padding: 15px; color: #fff;">
+    <h2 class="m-0">Role List</h2>
+</div>
+
+@if (Model.Count() == 0)
+{
+<p style="text-align: center;
+    font-size: 25px;
+    font-family: auto;
+    margin: 40px 0px;">No Roles</p> 
+}
+else
+{
+     <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+     <table class="table">
+         <thead class="thead-light">
+             <tr>
+                 <th scope="col">Name</th>
+                 <th scope="col">Users</th>
+                 <th scope="col"></th>
+             </tr>
+         </thead>
+         <tbody>
+            @foreach (var role in Model)
+            {
+                 <tr>
+                     <td>@role.Name</td>
+                     <td identity-role="@role.Id"></td>
+                     <td>
+                         <form asp-route-id="@role.Id" asp-action="Delete" method="post">
+                             <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                             <a class="btn btn-primary" asp-action="Update" asp-route-id="@role.Id"><i class="far fa-edit"></i></a>
+                         </form>
+                     </td>
+                 </tr>
+             }
+         </tbody>
+     </table>
+
+     <a asp-area="DigitalLifeAdmin" asp-controller="Role" asp-action="Create" class="btn btn-primary">
+        <i class="fas fa-plus" style="font-size: 15px; margin-right: 5px;"></i>
+            Create Role
+     </a>
+}
+
+
+

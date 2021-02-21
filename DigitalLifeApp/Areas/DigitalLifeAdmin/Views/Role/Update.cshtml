@@ -1,0 +1,74 @@
+﻿@model RoleDetails
+@{ 
+    ViewData["Title"] = "Update"; 
+}
+
+<div style="background: #1979a9; padding: 15px; color: #fff;">
+    <h2 class="m-0">Update Role</h2>
+</div>
+
+<div class="text-danger" asp-validation-summary="ModelOnly"></div>
+<form method="post" asp-action="Update">
+    <input type="hidden" name="RoleId" value="@Model.Role.Id" />
+    <input type="hidden" name="RoleName" value="@Model.Role.Name" />
+
+    <h6 style="padding: 10px; background: #5dbcd2; color: white;">
+        Add to @Model.Role.Name
+    </h6>
+
+    @if (Model.NonMembers.Count() == 0)
+    {
+        <p style="padding: 15px 0px;">All user are members</p> 
+    }
+    else
+    {
+       <table class="table">
+           <tbody>
+               @foreach (var user in Model.NonMembers)
+               {
+                   <tr>
+                       <td>@user.UserName</td>
+                       <td>
+                          <input style="width: 20px; height: 20px;" type="checkbox" name="IdsToAdd" value="@user.Id" />
+                       </td>
+                   </tr>
+               }
+           </tbody>
+       </table>
+    }
+
+    <h6 style="padding: 10px; background: #5dbcd2; color: white;">
+        Delete to @Model.Role.Name
+    </h6>
+
+    @if (Model.Members.Count() == 0)
+    {
+         <p style="padding: 15px 0px;">No users are members</p> }
+            else
+            {
+               <table class="table">
+                  <tbody>
+                      @foreach (var user in Model.Members)
+                       {
+                           <tr>
+                              <td>@user.UserName</td>
+                              <td>
+                                 <input style="width: 20px; height: 20px;" type="checkbox" name="IdsToDelete" value="@user.Id" />
+                              </td>
+                           </tr>
+                       }
+                  </tbody>
+               </table>
+            }
+
+    <button type="submit" class="btn btn-primary btn-icon-text">
+        <i class="mdi mdi-file-check btn-icon-prepend"></i>
+        Submit
+    </button>
+    <button asp-action="Index" type="submit" class="btn btn-secondary btn-icon-text">
+        <i class="mdi mdi-reload btn-icon-prepend"></i>
+        Cancel
+    </button>
+</form>
+
+
